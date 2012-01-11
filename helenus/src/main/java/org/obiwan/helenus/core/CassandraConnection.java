@@ -11,6 +11,29 @@ import org.scale7.cassandra.pelops.Pelops;
  *
  */
 public class CassandraConnection extends AbstractConnection {
+	
+	private String host="";
+	private int port=0;
+	private String pool="";
+	private String keyspace="";
+
+	/**
+	 * Default constructor
+	 */
+	public CassandraConnection(){}
+	
+
+	/**
+	 * 
+	 * @param host
+	 * @param port
+	 * @param pool
+	 * @param keyspace
+	 */
+	public CassandraConnection(String host, int port, String pool,
+			String keyspace) {
+		super(host, port, pool, keyspace);
+	}
 
 	/* (non-Javadoc)
 	 * @see org.obiwan.helenus.core.AbstractConnection#initConnectionPool(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
@@ -22,4 +45,44 @@ public class CassandraConnection extends AbstractConnection {
 		Pelops.addPool(pool, cluster, keyspace);
 	}
 
+
+	public void shutdownConnectionPool() {
+		Pelops.shutdown();
+	}
+	
+	public String getHost() {
+		return host;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public String getPool() {
+		return pool;
+	}
+
+	public String getKeyspace() {
+		return keyspace;
+	}
+
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+
+	public void setPool(String pool) {
+		this.pool = pool;
+	}
+
+
+	public void setKeyspace(String keyspace) {
+		this.keyspace = keyspace;
+	}
 }

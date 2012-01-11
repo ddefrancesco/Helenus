@@ -14,16 +14,16 @@ public class RowKey implements Serializable{
 
 	
 	private static final long serialVersionUID = -7528517976875413759L;
-
+	//TODO Constructor
 	private byte[] uniqueKey;
 
 	public byte[] getUniqueKey() {
 		
 		Random r = new Random(serialVersionUID);
-		byte[] bytes = new byte[32];
-		r.nextBytes(bytes);
+		uniqueKey = new byte[32];
+		r.nextBytes(uniqueKey);
 		
-		return bytes;
+		return uniqueKey;
 	}
 	
 	

@@ -9,20 +9,18 @@ import java.io.Serializable;
  * @author DeFrancescoD
  *
  */
-public class Value implements Serializable{
+public abstract class Value<T> implements Serializable{
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -878079677147948003L;
-	private String data;
+	private T data;
 	private long timestamp = System.nanoTime();
 	
 	
-	public String getData() {
+	public T getData() {
 		return data;
 	}
-	public void setData(String data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 	public long getTimestamp() {
