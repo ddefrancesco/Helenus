@@ -14,8 +14,17 @@ import java.util.Map;
 public class ColumnFamily implements Serializable {
 
 	private static final long serialVersionUID = -7355373317699416400L;
-
+	
+	private String family;
 	private Map<RowKey,ColumnOrSuperColumn<? extends BaseColumn>> dataMap = new LinkedHashMap<RowKey, ColumnOrSuperColumn<? extends BaseColumn>>();
+
+	public String getFamily() {
+		return family;
+	}
+
+	public void setFamily(String family) {
+		this.family = family;
+	}
 
 	public Map<RowKey, ColumnOrSuperColumn<? extends BaseColumn>> getDataMap() {
 		return dataMap;

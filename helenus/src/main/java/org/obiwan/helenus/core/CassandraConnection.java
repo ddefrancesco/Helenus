@@ -12,10 +12,7 @@ import org.scale7.cassandra.pelops.Pelops;
  */
 public class CassandraConnection extends AbstractConnection {
 	
-	private String host="";
-	private int port=0;
-	private String pool="";
-	private String keyspace="";
+
 
 	/**
 	 * Default constructor
