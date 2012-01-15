@@ -11,6 +11,8 @@ import java.io.Serializable;
  */
 public abstract class Value<T> implements Serializable{
 	
+	private static final long serialVersionUID = -878079677147948003L;
+	
 	public Value() {}
 	
 	
@@ -28,10 +30,11 @@ public abstract class Value<T> implements Serializable{
 		this.data = data;
 		this.timestamp = timestamp;
 	}
-	private static final long serialVersionUID = -878079677147948003L;
+	
 	private T data;
 	private long timestamp = System.nanoTime();
 	
+	protected abstract byte[] toByteArray(T data);
 	
 	public T getData() {
 		return data;
