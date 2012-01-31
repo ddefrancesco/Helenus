@@ -9,18 +9,18 @@ import java.io.Serializable;
  * @author DeFrancescoD
  *
  */
-public class ColumnOrSuperColumn<T extends BaseColumn> implements Serializable{
+public class ColumnOrSuperColumn implements Serializable{
 
 	
 	private static final long serialVersionUID = -6480196002664159277L;
 	
-	T column;
+	Class<?> column;
 
-	public T getColumn() {
+	public Class<?> getColumn() {
 		return column;
 	}
 
-	public void setColumn(T column) {
+	public void setColumn(Class<?> column) {
 		this.column = column;
 	}
 

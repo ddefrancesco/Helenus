@@ -23,7 +23,7 @@ public class ByteArrayValue extends Value<String> {
 	 * @param timestamp
 	 */
 	public ByteArrayValue(String data, long timestamp) {
-		super(data, timestamp);
+//		super(data, timestamp);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -33,7 +33,7 @@ public class ByteArrayValue extends Value<String> {
 	 * @param data
 	 */
 	public ByteArrayValue(String data) {
-		super(data);
+//		super(data);
 		// TODO Auto-generated constructor stub
 	}
 

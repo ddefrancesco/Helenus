@@ -14,16 +14,32 @@ import java.util.Map;
 public class SuperColumn extends BaseColumn {
 
 	
+	/**
+	 * 
+	 */
+	public SuperColumn() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param name
+	 */
+	public SuperColumn(String name) {
+		super(name);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static final long serialVersionUID = 3563437367411206845L;
 	
 	
-	private Map<byte[],Column> dataMap = new LinkedHashMap<byte[], Column>();
+	private Map<byte[],NumericColumn> dataMap = new LinkedHashMap<byte[], NumericColumn>();
 
-	public Map<byte[], Column> getDataMap() {
+	public Map<byte[], NumericColumn> getDataMap() {
 		return dataMap;
 	}
 
-	public void setDataMap(Map<byte[], Column> dataMap) {
+	public void setDataMap(Map<byte[], NumericColumn> dataMap) {
 		this.dataMap = dataMap;
 	}
 	

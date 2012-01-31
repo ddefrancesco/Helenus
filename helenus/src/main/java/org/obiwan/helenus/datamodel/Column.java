@@ -7,32 +7,52 @@ package org.obiwan.helenus.datamodel;
  * @author DeFrancescoD
  *
  */
-public class Column extends BaseColumn {
+public class Column  {
+
+	
 	private static final long serialVersionUID = 1517249370714486521L;
 	
-	public Column() {}
-	
-	public Column(String name) {
+	private String name;
+	private Value<?> value;
+	/**
+	 * 
+	 */
+	public Column() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param name
+	 * @param value
+	 */
+	public Column(String name, Value<?> value) {
 		this.name = name;
+		this.value = value;
+	}
+
+	/**
+	 * @param name
+	 */
+	public Column(String name) {
 		
 	}
 
-	public Column(String name,Value value) {
-		this.name = name;
-		this.value = value;
+	public String getName() {
+		return name;
 	}
-	
-	private Value value;
 
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	public Value getValue() {
+	public Value<?> getValue() {
 		return value;
 	}
 
-	public void setValue(Value value) {
+	public void setValue(Value<?> value) {
 		this.value = value;
 	}
-	
-	
+
 	
 }

@@ -16,7 +16,7 @@ public class ColumnFamily implements Serializable {
 	private static final long serialVersionUID = -7355373317699416400L;
 	
 	private String family;
-	private Map<RowKey,ColumnOrSuperColumn<? extends BaseColumn>> dataMap = new LinkedHashMap<RowKey, ColumnOrSuperColumn<? extends BaseColumn>>();
+	private Map<String,Map<Integer,ColumnOrSuperColumn>> dataMap = new LinkedHashMap<String, Map<Integer,ColumnOrSuperColumn>>();
 
 	public String getFamily() {
 		return family;
@@ -26,12 +26,12 @@ public class ColumnFamily implements Serializable {
 		this.family = family;
 	}
 
-	public Map<RowKey, ColumnOrSuperColumn<? extends BaseColumn>> getDataMap() {
+	public Map<String,Map<Integer,ColumnOrSuperColumn>> getDataMap() {
 		return dataMap;
 	}
 
 	public void setDataMap(
-			Map<RowKey, ColumnOrSuperColumn<? extends BaseColumn>> dataMap) {
+			Map<String,Map<Integer,ColumnOrSuperColumn>> dataMap) {
 		this.dataMap = dataMap;
 	}
 	
