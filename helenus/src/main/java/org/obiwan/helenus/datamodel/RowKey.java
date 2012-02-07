@@ -16,15 +16,19 @@ public class RowKey implements Serializable{
 	private static final long serialVersionUID = -7528517976875413759L;
 	
 	public RowKey(){
-		uniqueKey = calcUniqueKey(); //byte[4] 32-bit
+		//uniqueKey = calcUniqueKey(); //byte[32] 32-bit
 	}
 	
 	public RowKey(Integer uuid){
 		int uid = uuid.intValue();
-		uniqueKey = calcUniqueKey(toByteArray(uid)); //byte[4] 32-bit
+		uniqueKey = calcUniqueKey(toByteArray(uid)); //byte[32] 32-bit
 		
 	}
-	private String selectedId;
+	public RowKey(byte[] uid){
+		this.uniqueKey = uid;
+	}
+	
+	private String selectedId = "";
 	private byte[] uniqueKey = new byte[32];
 
 	private byte[] calcUniqueKey() {
@@ -75,8 +79,8 @@ public class RowKey implements Serializable{
 		this.uniqueKey = uniqueKey;
 	}
 	
-	@Override
-	public String toString(){
+	
+	public String toHexString(){
 		
 		String hexString = Long.toHexString(calcLongUniqueKey());
 		String to="";

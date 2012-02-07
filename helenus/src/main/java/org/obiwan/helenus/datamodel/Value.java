@@ -16,7 +16,7 @@ public class Value<T> implements Serializable{
 	public Value() {}
 	
 	
-	public Value(Class<?> data) {
+	public Value(T data) {
 		this.data = data;
 		this.timestamp = System.nanoTime();
 	}
@@ -25,23 +25,23 @@ public class Value<T> implements Serializable{
 	 * @param data
 	 * @param timestamp
 	 */
-	public Value(Class<?> data, long timestamp) {
+	public Value(T data, long timestamp) {
 		
 		this.data = data;
 		this.timestamp = timestamp;
 	}
 	
-	private Class<?> data;
+	private T data;
 	private long timestamp = System.nanoTime();
 	
 	protected byte[] toByteArray(T data){
 		return null;
 	}
 	
-	public Class<?> getData() {
+	public T getData() {
 		return data;
 	}
-	public void setData(Class<?> data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 	public long getTimestamp() {
