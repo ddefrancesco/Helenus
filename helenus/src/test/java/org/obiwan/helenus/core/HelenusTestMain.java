@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.obiwan.helenus.core.annotation.test;
+package org.obiwan.helenus.core;
 
 import org.obiwan.helenus.core.CassandraConnection;
 import org.obiwan.helenus.core.annotation.ConnectionData;
