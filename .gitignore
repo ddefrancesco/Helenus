@@ -1,1 +1,6 @@
-/helenus
+/helenus/target
+/helenus/.project
+/helenus/.classpath
+.DS_Store
+/helenus/.DS_Store
+/helenus/**/.DS_Store
