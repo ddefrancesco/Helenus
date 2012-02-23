@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 import org.apache.cassandra.thrift.ConsistencyLevel;
 
 /**
- * @author DeFrancescoD
+ * @author <a href="mailto:ddefrancesco@gmail.com">Daniele De Francesco</a> 
  *
  */
 @Target(ElementType.TYPE)

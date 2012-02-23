@@ -8,7 +8,7 @@ import java.util.Map;
 import org.obiwan.helenus.datamodel.ColumnOrSuperColumn;
 
 /**
- * @author DeFrancescoD
+ * @author <a href="mailto:ddefrancesco@gmail.com">Daniele De Francesco</a> 
  *
  */
 public interface IColumnFamily {

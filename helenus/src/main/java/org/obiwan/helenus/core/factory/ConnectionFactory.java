@@ -14,7 +14,7 @@ import org.scale7.cassandra.pelops.Cluster;
 import org.scale7.cassandra.pelops.Pelops;
 
 /**
- * @author DeFrancescoD
+ * @author <a href="mailto:ddefrancesco@gmail.com">Daniele De Francesco</a> 
  *
  */
 public class ConnectionFactory implements Serializable {

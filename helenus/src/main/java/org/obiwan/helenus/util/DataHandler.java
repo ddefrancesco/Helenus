@@ -7,7 +7,7 @@ import java.math.BigInteger;
 import java.nio.ByteBuffer;
 
 /**
- * @author DeFrancescoD
+ * @author <a href="mailto:ddefrancesco@gmail.com">Daniele De Francesco</a> 
  *
  */
 public class DataHandler {
@@ -110,4 +110,6 @@ public class DataHandler {
 	        (byte)((data >> 0) & 0xff),
 	    };
 	}
+	
+	
 }

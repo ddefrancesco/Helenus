@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.obiwan.helenus.core.enumeration.Type;
 import org.obiwan.helenus.datamodel.Column;
 import org.obiwan.helenus.datamodel.ColumnFamily;
 import org.obiwan.helenus.datamodel.ColumnOrSuperColumn;
@@ -28,12 +29,61 @@ public class ColumnFamilyFactory implements Serializable {
 	
 	private static final long serialVersionUID = -1019797214874177140L;
 	
-
+	//FIXME Deve supportare TUTTI I TIPI
+	public static ColumnFamily createColumnFamily(String familyName, String[] columnNames,Type[] types, boolean isSuperColumn) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException{
+		
+		//Supporta l'annotation xké i parametri sono passati come array di tipi supportati, 
+		//basta solo che allo stesso indice corrispondano nome e valori passati 
+		Value[] valueClazzes = new Value<?>[columnNames.length];
+		for (int i =0 ; i < columnNames.length;i++){
+			for(Type type : types){
+				switch (type) {
+				case STRING: 
+						
+						valueClazzes[i] = new Value<String>("");
+						
+					break;
+				case INTEGER: 
+					
+					valueClazzes[i] = new Value<Integer>(new Integer(0));
+					
+				break;
+				case DOUBLE: 
+					
+					valueClazzes[i] = new Value<Double>(new Double(0));
+					
+				break;
+				case FLOAT: 
+					
+					valueClazzes[i] = new Value<Float>(new Float(0));
+					
+				break;
+				case LONG: 
+					
+					valueClazzes[i] = new Value<Long>(new Long(0));
+					
+				break;
+				case SHORT: 
+					
+					valueClazzes[i] = new Value<Short>(new Short("0"));
+					
+				break;				
+				
+				default:
+					break;
+				}
+			}
+			
+		}
+		ColumnFamily columnFamily = createColumnFamily(familyName,columnNames,valueClazzes,isSuperColumn);
+		
+		
+		return columnFamily;
+	}
 	
 	public static ColumnFamily createColumnFamily(String familyName, String[] columnNames,Value<?>[] valueClazzes, boolean isSuperColumn) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException{
 		
-		//Supporta l'annotation xké i parametri sono passati come array di tipi supportati, 
-		//basta solo che allo stesso indice corrispondano nome e valori passati
+		
 		
 		ColumnFamily columnFamily = new ColumnFamily();
 		columnFamily.setFamily(familyName);
@@ -52,78 +102,7 @@ public class ColumnFamilyFactory implements Serializable {
 				Value<?> clazz = valueClazzes[i];
 				
 				
-//				Value<?> valClazz = null;
-//				@SuppressWarnings("unchecked")
-//				Constructor<?>[] constructors = (Constructor<?>[]) clazz.getDeclaredConstructors();
-//				Class[] parameterTypes = new Class[4];
-//				Constructor<?> _constructor = null;
-//				
-//				for(Constructor<?> constructor : constructors){
-//					
-//					parameterTypes = constructor.getParameterTypes();
-//					for(int j = 0;j<parameterTypes.length;j++){
-//						//System.out.println("Size di parameterTypes= "+parameterTypes.length);
-//						if(parameterTypes.length == 1){
-//							//_constructor = constructor;
-//							_constructor = clazz.getConstructor(parameterTypes[j]);
-//							
-//							if(parameterTypes[j] == String.class){
-//								
-//								valClazz = new Value<String>() ;
-//								valClazz.setData(new String("").getClass());
-//								valClazz.setTimestamp(System.nanoTime());	
-//								
-//							}
-//							else if(parameterTypes[j] == Long.TYPE){
-//								
-//								valClazz = new Value<Long>();
-//								valClazz.setData(new Long(0).getClass());
-//								valClazz.setTimestamp(System.nanoTime());	
-//							}
-//								
-//							else if(parameterTypes[j] == Float.TYPE){
-//								
-//								valClazz = new Value<Float>();
-//								valClazz.setData(new Float(0).getClass());
-//								valClazz.setTimestamp(System.nanoTime());	
-//							}
-//							else if(parameterTypes[j] == Double.TYPE){
-//								
-//								valClazz = new Value<Double>();
-//								valClazz.setData(new Double(0).getClass());
-//								valClazz.setTimestamp(System.nanoTime());	
-//							}
-//							else if(parameterTypes[j] == Boolean.TYPE){
-//								
-//								valClazz = new Value<Boolean>();
-//								valClazz.setData(new Boolean(false).getClass());
-//								valClazz.setTimestamp(System.nanoTime());	
-//							}
-//							else if(parameterTypes[j] == Integer.TYPE){
-//								
-//								valClazz = new Value<Integer>();
-//								valClazz.setData(new Integer(0).getClass());
-//								valClazz.setTimestamp(System.nanoTime());	
-//							}
-//							else if (parameterTypes[j] == BigInteger.class) {
-//
-//								valClazz = new Value<BigInteger>();
-//								valClazz.setData(new BigInteger("0").getClass());
-//								valClazz.setTimestamp(System.nanoTime());
-//							} 
-//							else if (parameterTypes[j] == BigDecimal.class) {
-//
-//								valClazz = new Value<BigDecimal>();
-//								valClazz.setData(new BigDecimal(0).getClass());
-//								valClazz.setTimestamp(System.nanoTime());
-//							}
-//						
-//							break;
-//						}
-//					
-//					}
 
-	//			}
 				for(Value<?> valClazz : valueClazzes){
 					
 					
