@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.obiwan.helenus.core.enumeration.Type;
+
 /**
  * @author DeFrancescoD
  *
@@ -43,5 +45,6 @@ public class ColumnFamily<T> implements Serializable {
 		this.superColumn = superColumn;
 	}
 	
+
 	
 }

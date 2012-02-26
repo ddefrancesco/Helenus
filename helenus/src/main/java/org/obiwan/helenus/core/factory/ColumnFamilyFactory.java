@@ -13,7 +13,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.obiwan.helenus.core.annotation.resolver.ColumnFamilyResolver;
+import org.obiwan.helenus.core.annotation.resolver.params.ColumnFamilyParams;
 import org.obiwan.helenus.core.enumeration.Type;
+import org.obiwan.helenus.core.exception.AnnotationNotPresentException;
 import org.obiwan.helenus.datamodel.Column;
 import org.obiwan.helenus.datamodel.ColumnFamily;
 import org.obiwan.helenus.datamodel.ColumnOrSuperColumn;
@@ -35,37 +38,38 @@ public class ColumnFamilyFactory implements Serializable {
 		//Supporta l'annotation xké i parametri sono passati come array di tipi supportati, 
 		//basta solo che allo stesso indice corrispondano nome e valori passati 
 		Value[] valueClazzes = new Value<?>[columnNames.length];
-		for (int i =0 ; i < columnNames.length;i++){
+		//for (int i =0 ; i < columnNames.length;i++){
+		int i = 0;
 			for(Type type : types){
 				switch (type) {
 				case STRING: 
 						
-						valueClazzes[i] = new Value<String>("");
+						valueClazzes[i++] = new Value<String>("");
 						
 					break;
 				case INTEGER: 
 					
-					valueClazzes[i] = new Value<Integer>(new Integer(0));
+					valueClazzes[i++] = new Value<Integer>(new Integer(0));
 					
 				break;
 				case DOUBLE: 
 					
-					valueClazzes[i] = new Value<Double>(new Double(0));
+					valueClazzes[i++] = new Value<Double>(new Double(0));
 					
 				break;
 				case FLOAT: 
 					
-					valueClazzes[i] = new Value<Float>(new Float(0));
+					valueClazzes[i++] = new Value<Float>(new Float(0));
 					
 				break;
 				case LONG: 
 					
-					valueClazzes[i] = new Value<Long>(new Long(0));
+					valueClazzes[i++] = new Value<Long>(new Long(0));
 					
 				break;
 				case SHORT: 
 					
-					valueClazzes[i] = new Value<Short>(new Short("0"));
+					valueClazzes[i++] = new Value<Short>(new Short("0"));
 					
 				break;				
 				
@@ -74,16 +78,24 @@ public class ColumnFamilyFactory implements Serializable {
 				}
 			}
 			
-		}
+		//}
 		ColumnFamily columnFamily = createColumnFamily(familyName,columnNames,valueClazzes,isSuperColumn);
 		
 		
 		return columnFamily;
 	}
 	
+	
+	public static ColumnFamily createColumnFamily(Class<?> clazz) throws AnnotationNotPresentException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException{
+			
+		ColumnFamilyResolver resolver = new ColumnFamilyResolver();
+		ColumnFamilyParams params = resolver.getColumnParams(clazz);
+		ColumnFamily columnFamily = createColumnFamily(params.getFamily(),params.getColumnNames(),params.getTypes(),params.isSuperColumn());
+		
+		return columnFamily;
+	}
+	
 	public static ColumnFamily createColumnFamily(String familyName, String[] columnNames,Value<?>[] valueClazzes, boolean isSuperColumn) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException{
-		
-		
 		
 		ColumnFamily columnFamily = new ColumnFamily();
 		columnFamily.setFamily(familyName);
@@ -166,4 +178,6 @@ public class ColumnFamilyFactory implements Serializable {
 		columnFamily.setSuperColumn(isSuperColumn);
 		return columnFamily;
 	}
+	
+	
 }
