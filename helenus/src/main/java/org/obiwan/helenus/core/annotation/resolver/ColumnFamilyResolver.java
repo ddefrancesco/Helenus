@@ -4,6 +4,7 @@
 package org.obiwan.helenus.core.annotation.resolver;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import org.obiwan.helenus.core.annotation.resolver.params.ColumnFamilyParams;
@@ -32,7 +33,19 @@ public class ColumnFamilyResolver {
 			}/*else{
 				throw new AnnotationNotPresentException();
 			}*/
-			
+		}
+		for(Field field : clazz.getFields()){
+			if(field.isAnnotationPresent(org.obiwan.helenus.core.annotation.ColumnFamily.class)) {
+				Annotation[] annotations = field.getAnnotations();
+				//System.out.println("No. of annotations: " + annotations.length);
+				for (Annotation annotation : annotations) {
+					org.obiwan.helenus.core.annotation.ColumnFamily columnFamilyAnnotation = (org.obiwan.helenus.core.annotation.ColumnFamily)annotation; 
+					params.setFamily(columnFamilyAnnotation.familyName());
+					params.setColumnNames(columnFamilyAnnotation.columnNames());
+					params.setTypes(columnFamilyAnnotation.types());
+					params.setSuperColumn(columnFamilyAnnotation.superColumn());
+				}			
+			}
 		}
 		
 		

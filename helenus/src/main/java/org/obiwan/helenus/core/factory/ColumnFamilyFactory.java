@@ -4,15 +4,14 @@
 package org.obiwan.helenus.core.factory;
 
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.cassandra.thrift.ConsistencyLevel;
+import org.obiwan.helenus.core.CassandraConnection;
 import org.obiwan.helenus.core.annotation.resolver.ColumnFamilyResolver;
 import org.obiwan.helenus.core.annotation.resolver.params.ColumnFamilyParams;
 import org.obiwan.helenus.core.enumeration.Type;
@@ -22,6 +21,9 @@ import org.obiwan.helenus.datamodel.ColumnFamily;
 import org.obiwan.helenus.datamodel.ColumnOrSuperColumn;
 import org.obiwan.helenus.datamodel.RowKey;
 import org.obiwan.helenus.datamodel.Value;
+import org.obiwan.helenus.util.DataHandler;
+import org.scale7.cassandra.pelops.Mutator;
+import org.scale7.cassandra.pelops.Pelops;
 
 /**
  * @author <a href="mailto:ddefrancesco@gmail.com">Daniele De Francesco</a> 
@@ -44,34 +46,28 @@ public class ColumnFamilyFactory implements Serializable {
 				switch (type) {
 				case STRING: 
 						
-						valueClazzes[i++] = new Value<String>("");
-						
+					valueClazzes[i++] = new Value<String>("");
 					break;
 				case INTEGER: 
 					
 					valueClazzes[i++] = new Value<Integer>(new Integer(0));
-					
-				break;
+					break;
 				case DOUBLE: 
 					
 					valueClazzes[i++] = new Value<Double>(new Double(0));
-					
-				break;
+					break;
 				case FLOAT: 
 					
 					valueClazzes[i++] = new Value<Float>(new Float(0));
-					
-				break;
+					break;
 				case LONG: 
 					
 					valueClazzes[i++] = new Value<Long>(new Long(0));
-					
-				break;
+					break;
 				case SHORT: 
 					
 					valueClazzes[i++] = new Value<Short>(new Short("0"));
-					
-				break;				
+					break;				
 				
 				default:
 					break;
@@ -179,5 +175,40 @@ public class ColumnFamilyFactory implements Serializable {
 		return columnFamily;
 	}
 	
+	private static void prepareColumns(ColumnFamily _columnFamily,
+			Mutator mutator) {
+		if(!_columnFamily.isSuperColumn()){
+		//Giro sulla mappa
+		Iterator<Map.Entry<String, Map<Integer, ColumnOrSuperColumn<org.obiwan.helenus.datamodel.Column>>>> iMap = _columnFamily.getDataMap().entrySet().iterator();
+		while(iMap.hasNext()){
+			
+			Entry<String, Map<Integer, ColumnOrSuperColumn<org.obiwan.helenus.datamodel.Column>>> entry = iMap.next();
+			String key = entry.getKey();
+			
+				Map<Integer, ColumnOrSuperColumn<org.obiwan.helenus.datamodel.Column>> records = entry.getValue();
+				Iterator<Map.Entry<Integer, ColumnOrSuperColumn<org.obiwan.helenus.datamodel.Column>>> iCols = records.entrySet().iterator();
+					while(iCols.hasNext()){
+						Entry<Integer, ColumnOrSuperColumn<org.obiwan.helenus.datamodel.Column>> columnMap = iCols.next();
+						@SuppressWarnings("unchecked")
+						ColumnOrSuperColumn<org.obiwan.helenus.datamodel.Column> column = columnMap.getValue();
+						System.out.println(""+column.getColumn().getValue().getData());
+						org.apache.cassandra.thrift.Column thriftColumn = new org.apache.cassandra.thrift.Column();
+						thriftColumn.setName(column.getColumn().getName().getBytes());
+						byte[] _bArray = DataHandler.toByteArray(column.getColumn().getValue().getData());//FIXME
+						thriftColumn.setValue(_bArray);
+						thriftColumn.setTimestamp(column.getColumn().getValue().getTimestamp());
+						mutator.writeColumn(_columnFamily.getFamily(), key, thriftColumn);
+						
+					}					
+			}
+		}
+	}
 	
+	public static void executeMutator(CassandraConnection connection,
+			ColumnFamily _columnFamily) {
+		Mutator mutator = Pelops.createMutator(connection.getPool());
+		prepareColumns(_columnFamily, mutator);
+
+		mutator.execute(ConsistencyLevel.ONE);
+	}
 }
