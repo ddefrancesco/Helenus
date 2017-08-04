@@ -43,5 +43,8 @@ public class SuperColumn extends BaseColumn {
 		this.dataMap = dataMap;
 	}
 	
+	public String fake() {
+		return "fake";
+	}
 	
 }
